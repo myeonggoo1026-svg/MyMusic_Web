@@ -1,0 +1,212 @@
+/************************
+ * RESET & BASE
+ ************************/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #1a1a1a; /* 짙은 회색 */
+  color: #f5f5f5;
+  font-family: 'Pretendard', 'Arial', sans-serif;
+  height: 100vh;
+  overflow: hidden;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+.hidden {
+  display: none;
+}
+
+/************************
+ * COMMON SECTION
+ ************************/
+section {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/************************
+ * 1. HOME
+ ************************/
+#home h1 {
+  font-size: 3rem;
+  letter-spacing: 4px;
+  margin-bottom: 20px;
+}
+
+#home button {
+  font-size: 1rem;
+  padding: 12px 32px;
+  border: 1px solid #fff;
+  transition: all 0.3s;
+}
+
+#home button:hover {
+  background: #fff;
+  color: #000;
+}
+
+/************************
+ * 2. TYPE SELECT
+ ************************/
+#typeSelect {
+  flex-direction: row;
+  gap: 40px;
+}
+
+.card {
+  width: 220px;
+  height: 280px;
+  border: 1px solid #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.4s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: #fff;
+}
+
+/************************
+ * 3. ALBUM LIST
+ ************************/
+#albumList {
+  flex-direction: row;
+  gap: 40px;
+  padding-top: 60px;
+}
+
+.album-card {
+  width: 200px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.album-card img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  transition: transform 0.4s;
+}
+
+.album-card:hover img {
+  transform: scale(1.05);
+}
+
+.album-card p {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+/************************
+ * 4. PLAYER
+ ************************/
+#player {
+  padding-top: 40px;
+}
+
+#albumCover {
+  width: 220px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* LP 영역 */
+.lp-container {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  margin-bottom: 30px;
+}
+
+.lp {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: spin 3s linear infinite;
+  animation-play-state: paused;
+}
+
+/* 재생 중일 때 */
+.playing .lp {
+  animation-play-state: running;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/************************
+ * TRACK LIST
+ ************************/
+#trackList {
+  list-style: none;
+  width: 260px;
+  margin-bottom: 20px;
+}
+
+#trackList li {
+  padding: 8px 0;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+#trackList li:hover {
+  opacity: 1;
+}
+
+/************************
+ * PROGRESS BAR
+ ************************/
+.progress {
+  width: 260px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  margin-bottom: 20px;
+}
+
+input[type='range'] {
+  flex: 1;
+}
+
+/************************
+ * PLAY BUTTON
+ ************************/
+#playBtn {
+  font-size: 1.2rem;
+  padding: 10px 30px;
+  border: 1px solid #fff;
+  transition: all 0.3s;
+}
+
+#playBtn:hover {
+  background: #fff;
+  color: #000;
+}

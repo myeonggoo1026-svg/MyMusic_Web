@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Music</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- 1. 홈 화면 -->
+    <section id="home">
+      <h1>MY MUSIC</h1>
+      <h3>Kim MyeongJin</h3>
+      <br />
+      <br />
+      <button id="enterBtn">ENTER</button>
+    </section>
+
+    <!-- 2. 개인 / 밴드 선택 -->
+    <section id="typeSelect" class="hidden">
+      <div class="card" data-type="solo">개인 음악</div>
+      <div class="card" data-type="band">밴드 음악</div>
+    </section>
+
+    <!-- 3. 앨범 목록 -->
+    <section id="albumList" class="hidden"></section>
+
+    <!-- 4. 플레이어 -->
+    <section id="player" class="hidden">
+      <img id="albumCover" />
+
+      <div class="lp-container">
+        <img id="albumCover" />
+      </div>
+
+      <ul id="trackList"></ul>
+
+      <div class="progress">
+        <span id="currentTime">0:00</span>
+        <input type="range" id="progressBar" value="0" />
+        <span id="duration">0:00</span>
+      </div>
+
+      <button id="playBtn">▶</button>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
