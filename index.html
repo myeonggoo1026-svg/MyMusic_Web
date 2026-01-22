@@ -6,30 +6,33 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- 1. 홈 화면 -->
+    <!-- HOME -->
     <section id="home">
       <h1>MY MUSIC</h1>
       <h3>Kim MyeongJin</h3>
-      <br />
-      <br />
       <button id="enterBtn">ENTER</button>
     </section>
 
-    <!-- 2. 개인 / 밴드 선택 -->
+    <!-- TYPE SELECT -->
     <section id="typeSelect" class="hidden">
       <div class="card" data-type="solo">개인 음악</div>
       <div class="card" data-type="band">밴드 음악</div>
     </section>
 
-    <!-- 3. 앨범 목록 -->
-    <section id="albumList" class="hidden"></section>
+    <!-- ALBUM LIST -->
+    <section id="albumList" class="hidden">
+      <button class="back-btn" data-target="typeSelect">← 뒤로</button>
+      <div id="albumContainer"></div>
+    </section>
 
-    <!-- 4. 플레이어 -->
+    <!-- PLAYER -->
     <section id="player" class="hidden">
+      <button class="back-btn" data-target="albumList">← 뒤로</button>
+
       <img id="albumCover" />
 
       <div class="lp-container">
-        <img id="albumCover" />
+        <img id="lp" class="lp" src="LP/LLP.PNG" />
       </div>
 
       <ul id="trackList"></ul>
