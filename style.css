@@ -156,9 +156,33 @@ section {
   position: absolute;
   top: 30px;
   left: 30px;
-  color: #aaa;
+  color: #fff;
 }
 
 .back-btn:hover {
   color: #fff;
+}
+
+.album-card {
+  width: 200px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.album-card:hover {
+  border-color: #fff;
+  transform: translateY(-8px);
+}
+
+.album-card img {
+  width: 100%;
+  border-radius: 8px;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.album-card:hover img {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
 }
