@@ -44,7 +44,7 @@ const albums = {
   ],
   band: [
     {
-      title: '꿈 : 출발, 성장',
+      title: '<1집> 꿈 : 출발, 성장',
       cover: 'covers/KakaoTalk_20260122_231648526_01.jpg',
       tracks: [
         { title: '새벽 꿈', src: 'songs/ChoYeon 1 Album/새벽 꿈.mp3' },
@@ -61,7 +61,7 @@ const albums = {
     },
 
     {
-      title: '삶 : 우리, 감정',
+      title: '<2집> 삶 : 우리, 감정',
       cover: 'covers/KakaoTalk_20260122_231648526_03.PNG',
       tracks: [
         {
@@ -89,7 +89,7 @@ const albums = {
     },
 
     {
-      title: '존재 : 우주, 인간',
+      title: '<3집> 존재 : 우주, 인간',
       cover: 'covers/KakaoTalk_20260122_231648526_02.jpg',
       tracks: [
         {
