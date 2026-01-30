@@ -113,13 +113,22 @@ const albums = {
 };
 
 /* [추가] 서버에서 데이터 로드 함수 */
+/* [수정] script.js */
 async function loadServerData() {
   try {
-    const response = await fetch('http://localhost:8080/songs');
+    const response = await fetch(
+      'https://unslacking-germanely-sylvester.ngrok-free.dev/songs',
+      {
+        headers: {
+          // 이 헤더를 추가하면 ngrok 경고 페이지를 자동으로 건너뜁니다.
+          'ngrok-skip-browser-warning': 'true',
+        },
+      },
+    );
     dbSongs = await response.json();
-    console.log('DB 데이터 로드 완료:', dbSongs);
+    console.log('외부 연동 성공!');
   } catch (error) {
-    console.error('서버 연결 실패:', error);
+    console.error('데이터 로드 실패:', error);
   }
 }
 
