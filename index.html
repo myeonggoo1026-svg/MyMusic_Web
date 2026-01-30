@@ -6,20 +6,17 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- HOME -->
     <section id="home">
       <h1>MY MUSIC</h1>
       <h3>Kim MyeongJin</h3>
       <button id="enterBtn">ENTER</button>
     </section>
 
-    <!-- TYPE SELECT -->
     <section id="typeSelect" class="hidden">
       <div class="card" data-type="solo">솔로 앨범</div>
       <div class="card" data-type="band">초연 앨범</div>
     </section>
 
-    <!-- ALBUM LIST -->
     <section id="albumList" class="hidden">
       <button class="back-btn" data-target="typeSelect">← 뒤로</button>
       <div id="albumContainer">
@@ -27,14 +24,30 @@
       </div>
     </section>
 
-    <!-- PLAYER -->
     <section id="player" class="hidden">
       <button class="back-btn" data-target="albumList">← 뒤로</button>
 
-      <img id="albumCover" />
+      <div class="player-content">
+        <img id="albumCover" />
 
-      <div class="lp-container">
-        <img id="lp" class="lp" src="LP/LLP.PNG" />
+        <div class="lp-container">
+          <img id="lp" class="lp" src="LP/LLP.PNG" />
+        </div>
+
+        <div id="songInfo" class="info-box">
+          <h2 id="infoTitle">곡 제목</h2>
+          <div id="infoDetail">
+            <p><strong>아티스트</strong> <span id="infoArtist">-</span></p>
+            <p><strong>앨범</strong> <span id="infoAlbumName">-</span></p>
+            <p><strong>발매연도</strong> <span id="infoReleaseYear">-</span></p>
+            <p><strong>장르</strong> <span id="infoGenre">-</span></p>
+            <p><strong>작곡</strong> <span id="infoComposer">-</span></p>
+            <p><strong>작사</strong> <span id="infoLyricist">-</span></p>
+          </div>
+          <p id="noInfoMsg" class="hidden">
+            상세 정보가 등록되지 않은 곡입니다.
+          </p>
+        </div>
       </div>
 
       <ul id="trackList"></ul>

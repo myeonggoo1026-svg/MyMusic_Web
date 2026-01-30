@@ -15,10 +15,22 @@ const progressBar = document.getElementById('progressBar');
 const currentTimeEl = document.getElementById('currentTime');
 const durationEl = document.getElementById('duration');
 
+// [추가] 정보창 관련 엘리먼트
+const infoTitle = document.getElementById('infoTitle');
+const infoComposer = document.getElementById('infoComposer');
+const infoLyricist = document.getElementById('infoLyricist');
+const infoAlbumName = document.getElementById('infoAlbumName');
+const infoArtist = document.getElementById('infoArtist');
+const infoReleaseYear = document.getElementById('infoReleaseYear');
+const infoGenre = document.getElementById('infoGenre');
+const infoDetail = document.getElementById('infoDetail');
+const noInfoMsg = document.getElementById('noInfoMsg');
+
 const audio = new Audio();
 let currentAlbum = null;
+let dbSongs = []; // [추가] 서버에서 가져온 곡 정보를 저장할 배열
 
-/* 데이터 */
+/* 데이터 (기존 유지) */
 const albums = {
   solo: [
     {
@@ -59,7 +71,6 @@ const albums = {
         { title: '성간 여행', src: 'songs/ChoYeon 1 Album/성간 여행.mp3' },
       ],
     },
-
     {
       title: '<2집> 삶 : 우리, 감정',
       cover: 'covers/KakaoTalk_20260122_231648526_03.PNG',
@@ -87,7 +98,6 @@ const albums = {
         },
       ],
     },
-
     {
       title: '<3집> 존재 : 우주, 인간',
       cover: 'covers/KakaoTalk_20260122_231648526_02.jpg',
@@ -101,6 +111,17 @@ const albums = {
     },
   ],
 };
+
+/* [추가] 서버에서 데이터 로드 함수 */
+async function loadServerData() {
+  try {
+    const response = await fetch('http://localhost:8080/songs');
+    dbSongs = await response.json();
+    console.log('DB 데이터 로드 완료:', dbSongs);
+  } catch (error) {
+    console.error('서버 연결 실패:', error);
+  }
+}
 
 /* 화면 전환 */
 function show(target) {
@@ -126,7 +147,7 @@ function renderAlbums(type) {
   });
 }
 
-/* 트랙 */
+/* 트랙 렌더 */
 function renderTracks(album) {
   albumCover.src = album.cover;
   lp.src = 'LP/LLP.PNG';
@@ -135,20 +156,49 @@ function renderTracks(album) {
   album.tracks.forEach((t) => {
     const li = document.createElement('li');
     li.textContent = t.title;
-    li.onclick = () => playTrack(t);
+    li.onclick = () => {
+      playTrack(t);
+      updateSongInfo(t.title); // [추가] 클릭 시 정보창 업데이트
+    };
     trackList.appendChild(li);
   });
 }
 
+/* [추가] 정보창 업데이트 함수 */
+function updateSongInfo(songTitle) {
+  const songData = dbSongs.find((s) => s.title === songTitle);
+  infoTitle.textContent = songTitle;
+
+  if (songData) {
+    infoDetail.classList.remove('hidden');
+    noInfoMsg.classList.add('hidden');
+
+    // 데이터 꽂아주기 (DB 컬럼명과 매칭 확인!)
+    infoArtist.textContent = songData.artist || '-';
+    infoAlbumName.textContent = songData.albumName || '-';
+    infoReleaseYear.textContent = songData.releaseYear || '-'; // DB에 release_year 컬럼이 있어야 함
+    infoGenre.textContent = songData.genre || '-';
+    infoComposer.textContent = songData.composer || '-';
+    infoLyricist.textContent = songData.lyricist || '-';
+  } else {
+    infoDetail.classList.add('hidden');
+    noInfoMsg.classList.remove('hidden');
+  }
+}
+
+/* 재생 로직 */
 function playTrack(track) {
   audio.src = track.src;
   audio.play();
-  player.classList.add('playing'); // 트랙 선택 시 LP판 회전
+  player.classList.add('playing');
   playBtn.textContent = '⏸';
 }
 
-/* 이벤트 */
-enterBtn.onclick = () => show(typeSelect);
+/* 이벤트 리스너 */
+enterBtn.onclick = async () => {
+  await loadServerData(); // [수정] 진입 시 서버 데이터 로드
+  show(typeSelect);
+};
 
 document.querySelectorAll('.card').forEach((c) => {
   c.onclick = () => {
@@ -160,22 +210,16 @@ document.querySelectorAll('.card').forEach((c) => {
 playBtn.onclick = () => {
   if (audio.paused) {
     audio.play();
-    player.classList.add('playing'); // LP판 회전 시작
+    player.classList.add('playing');
     playBtn.textContent = '⏸';
   } else {
     audio.pause();
-    player.classList.remove('playing'); // LP판 회전 정지
+    player.classList.remove('playing');
     playBtn.textContent = '▶';
   }
 };
 
-function playTrack(track) {
-  audio.src = track.src;
-  audio.play();
-  player.classList.add('playing');
-  playBtn.textContent = '⏸';
-}
-
+/* 시간 포맷 및 업데이트 (기존 유지) */
 function formatTime(seconds) {
   const min = Math.floor(seconds / 60);
   const sec = Math.floor(seconds % 60);

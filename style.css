@@ -85,28 +85,45 @@ section {
   width: 200px;
   text-align: center;
   cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.album-card:hover {
+  transform: translateY(-8px);
 }
 
 .album-card img {
   width: 100%;
   border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+}
+
+.album-card:hover img {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
 }
 
 .album-card p {
   margin-top: 10px;
 }
 
-/* PLAYER */
+/* PLAYER 메인 레이아웃 */
+.player-content {
+  display: flex; /* 가로 배치 */
+  align-items: center;
+  justify-content: center;
+  gap: 50px; /* 요소 사이 간격 */
+  margin-bottom: 30px;
+}
+
 #albumCover {
   width: 220px;
   border-radius: 10px;
-  margin-bottom: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .lp-container {
-  width: 260px;
-  height: 260px;
-  margin-bottom: 20px;
+  width: 240px;
+  height: 240px;
   position: relative;
 }
 
@@ -122,33 +139,85 @@ section {
   animation-play-state: running;
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* [추가] 곡 정보창 스타일 */
+.info-box {
+  width: 300px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  border-radius: 15px;
+  border-left: 3px solid #fff;
 }
 
-/* TRACK */
+.info-box h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.info-box p {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  color: #ccc;
+}
+
+.info-box strong {
+  display: inline-block;
+  width: 70px;
+  color: #888;
+  font-weight: 500;
+}
+
+#noInfoMsg {
+  color: #ff6b6b;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+/* TRACK LIST */
 #trackList {
   list-style: none;
-  width: 260px;
+  width: 400px; /* 목록 너비 확보 */
+  max-height: 150px;
+  overflow-y: auto; /* 곡이 많으면 스크롤 */
+  margin-bottom: 20px;
 }
 
 #trackList li {
-  padding: 8px 0;
+  padding: 10px 15px;
   border-bottom: 1px solid #333;
   cursor: pointer;
+  transition: 0.2s;
 }
 
-/* PROGRESS */
+#trackList li:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* PROGRESS & BUTTONS */
 .progress {
-  width: 260px;
+  width: 400px;
   display: flex;
-  gap: 10px;
-  margin: 20px 0;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+#progressBar {
+  flex: 1;
+  accent-color: #fff;
+}
+
+#playBtn {
+  font-size: 2rem;
+  transition: transform 0.2s;
+}
+
+#playBtn:hover {
+  transform: scale(1.1);
 }
 
 /* BACK BUTTON */
@@ -156,33 +225,20 @@ section {
   position: absolute;
   top: 30px;
   left: 30px;
-  color: #fff;
+  font-size: 1rem;
+  opacity: 0.7;
+  transition: 0.3s;
 }
 
 .back-btn:hover {
-  color: #fff;
+  opacity: 1;
 }
 
-.album-card {
-  width: 200px;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.album-card:hover {
-  border-color: #fff;
-  transform: translateY(-8px);
-}
-
-.album-card img {
-  width: 100%;
-  border-radius: 8px;
-  transition:
-    box-shadow 0.3s ease,
-    transform 0.3s ease;
-}
-
-.album-card:hover img {
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
