@@ -28,6 +28,7 @@ const noInfoMsg = document.getElementById('noInfoMsg');
 
 const audio = new Audio();
 let currentAlbum = null;
+let selectedTrack = null; // 현재 선택된 곡
 let dbSongs = []; // [추가] 서버에서 가져온 곡 정보를 저장할 배열
 
 /* 데이터 (기존 유지) */
@@ -120,7 +121,7 @@ async function loadServerData() {
       'https://unslacking-germanely-sylvester.ngrok-free.dev/songs',
       {
         headers: {
-          // 이 헤더를 추가하면 ngrok 경고 페이지를 자동으로 건너뜁니다.
+          // ngrok 경고 페이지를 자동으로 건너뜀
           'ngrok-skip-browser-warning': 'true',
         },
       },
@@ -130,6 +131,16 @@ async function loadServerData() {
   } catch (error) {
     console.error('데이터 로드 실패:', error);
   }
+}
+
+// 앨범 변경시 플레이 리셋 함수
+function resetPlayerState() {
+  audio.pause();
+  audio.currentTime = 0;
+  audio.src = '';
+  selectedTrack = null;
+  player.classList.remove('playing');
+  playBtn.textContent = '▶';
 }
 
 /* 화면 전환 */
@@ -148,10 +159,12 @@ function renderAlbums(type) {
     div.className = 'album-card';
     div.innerHTML = `<img src="${album.cover}"><p>${album.title}</p>`;
     div.onclick = () => {
+      resetPlayerState(); // ★ 이전 음악 완전 제거
       currentAlbum = album;
       renderTracks(album);
       show(player);
     };
+
     albumContainer.appendChild(div);
   });
 }
@@ -166,9 +179,14 @@ function renderTracks(album) {
     const li = document.createElement('li');
     li.textContent = t.title;
     li.onclick = () => {
-      playTrack(t);
-      updateSongInfo(t.title); // [추가] 클릭 시 정보창 업데이트
+      selectedTrack = t; // 곡 선택 상태 저장
+      audio.src = t.src; // 소스만 세팅 (재생 X)
+      updateSongInfo(t.title);
+
+      player.classList.remove('playing');
+      playBtn.textContent = '▶';
     };
+
     trackList.appendChild(li);
   });
 }
@@ -182,7 +200,7 @@ function updateSongInfo(songTitle) {
     infoDetail.classList.remove('hidden');
     noInfoMsg.classList.add('hidden');
 
-    // 데이터 꽂아주기 (DB 컬럼명과 매칭 확인!)
+    // 데이터 꽂아주기 (DB 컬럼명과 매칭 확인)
     infoArtist.textContent = songData.artist || '-';
     infoAlbumName.textContent = songData.albumName || '-';
     infoReleaseYear.textContent = songData.releaseYear || '-'; // DB에 release_year 컬럼이 있어야 함
@@ -217,6 +235,11 @@ document.querySelectorAll('.card').forEach((c) => {
 });
 
 playBtn.onclick = () => {
+  if (!selectedTrack) {
+    alert('곡을 선택해주세요.');
+    return;
+  }
+
   if (audio.paused) {
     audio.play();
     player.classList.add('playing');
@@ -250,9 +273,7 @@ progressBar.oninput = () => {
 
 document.querySelectorAll('.back-btn').forEach((btn) => {
   btn.onclick = () => {
-    audio.pause();
-    audio.currentTime = 0;
-    player.classList.remove('playing');
+    resetPlayerState(); // 공통 초기화
     show(document.getElementById(btn.dataset.target));
   };
 });
